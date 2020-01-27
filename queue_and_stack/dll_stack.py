@@ -14,7 +14,7 @@ It is a First In, Last Out, or FILO structure
 class Stack:
     def __init__(self):
         self.size = 0
-        self.top_item = None
+        
         # Why is our DLL a good choice to store our elements?
         self.storage = DoublyLinkedList()
 
@@ -23,8 +23,7 @@ class Stack:
         self.storage.add_to_head(value)
 
         #increment the size of the stack
-        self.size += 1     
-
+        self.size += 1   
         
         
     def pop(self):
