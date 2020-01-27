@@ -21,12 +21,13 @@ class Stack:
     def push(self, value):
 
         #if there is still space on the stack
-        if self.len() < 1000:
+        if self.len() < self.storage:
 
-            #instantiate a node with value as an argument and assign it to the variable item
+            #instantiate a node with value as an argument and assign it to the variable new_item
             #because this item is a node, we have easy access to ListNode’s class methods
             new_item = ListNode(value)
 
+            #increment the size of the stack
             self.size += 1
 
             #if the stack is empty
@@ -53,7 +54,7 @@ class Stack:
     def pop(self):
 
         #if the stack is not empty
-        if self.size > 0:
+        if self.len() > 0:
 
             #always remove the first item from a stack first
             item_to_remove = self.top_item
@@ -70,7 +71,6 @@ class Stack:
         #if the stack is not empty
         else:
             print("The stack is totally empty.")
-
 
     def len(self):
 
