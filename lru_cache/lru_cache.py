@@ -1,3 +1,5 @@
+"""LRU Caches discard the least recently used item in the cache when it is full"""
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
