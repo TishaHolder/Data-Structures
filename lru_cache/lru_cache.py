@@ -1,4 +1,5 @@
 """LRU Caches discard the least recently used item in the cache when it is full"""
+from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
     """
@@ -9,7 +10,11 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.size = None
+        self.list = DoublyLinkedList()
+        self.storage = {}
+
 
     """
     Retrieves the value associated with the given key. Also
@@ -19,7 +24,25 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        for i in self.storage:
+            if key in key.storage:
+
+                #if the key is found store the associated value in the value variable                
+                value = self.storage[key]
+
+                #this removes the key/value pair specified by the key from the dict. it returns the removed value
+                self.storage.pop(key)
+
+                #use the set method below to move the pair to the end of the order so it's MRU
+                self.set(key, value)
+
+                #rerturns the value associated with the given key
+                return self.storage[key]
+            else:
+                #returns none of the key/value pair doesn't exist
+                return None
+
+
 
     """
     Adds the given key-value pair to the cache. The newly-
