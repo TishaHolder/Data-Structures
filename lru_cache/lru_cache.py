@@ -49,14 +49,14 @@ class LRUCache:
             if key in self.storage:
 
                 #Retrieves the value associated with the given key.                
-                value = self.storage[key]
+                new_node = self.storage[key]
 
                 #Also needs to move the key-value pair to the end of the order such that the pair is 
                 # considered most-recently used.
-                self.list.move_to_front(value)                
+                self.list.move_to_front(new_node)                
 
                 #Returns the value associated with the key
-                return self.storage[key]
+                return new_node.value[1]
             else:
                 #returns none if the key/value pair doesn't exist
                 return None
@@ -73,19 +73,14 @@ class LRUCache:
     want to overwrite the old value associated with the key with
     the newly-specified value.
     """
-    def set(self, key, value):
+    def set(self, key, value):      
+        
 
-        #checks if the cache is already at max capacity before this entry is added
-        if self.size < self.limit:
-
-            #decrement size of cache or dictionary by 1
-            self.size += 1
-
-            #then check if key already exists
-            # if it does, overwrite the old value associated with the key with the new value
-            if self.storage[key] == key:
-                self.storage[key] = value            
-           
+        #check if key already exists in the dictioary
+        # if it does, overwrite the old value associated with the key with the new value
+        if key in self.storage:
+            value = self.storage[key]         
+        
             #then retrieve the given key/value pair from the dictionary
             new_item = self.storage.get(key)
 
@@ -94,8 +89,9 @@ class LRUCache:
 
             #increment the size of the cache
             self.size += 1
-        #if the cache is at max capacity, delete the oldest entry in the cache to make room
-        else:          
+
+        #if the cache is at max capacity, delete the oldest entry in the cache to make room        
+        if self.size == self.limit:      
 
             #remove it from the cache or dictionary
             del self.storage[self.list.tail.value[0]]
@@ -104,6 +100,21 @@ class LRUCache:
             self.list.remove_from_tail()
 
             self.size -= 1
+
+        else:
+            #add value to dictionary with the provided key
+            self.storage[key] = value
+
+            #then retrieve the given key/value pair from the dictionary
+            new_node = self.storage.get(key)
+
+            #and add it to the doubly linked list as the first item (MRU)
+            self.list.add_to_head(new_node)            
+
+            #increment the size of the cache
+            self.size += 1
+
+
 
             
 
