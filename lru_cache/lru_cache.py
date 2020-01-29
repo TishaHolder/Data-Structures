@@ -34,7 +34,7 @@ class LRUCache:
         #dictionary used as cache to store key value pairs and point to every element in the DoublyLinkedList
         #if we want a pointer to Node C, use dictionary to look up by the key of C and it will return 
         #a pointer to C
-        self.storage = {}
+        self.storage = dict()
 
 
     """
@@ -48,15 +48,17 @@ class LRUCache:
                 
             if key in self.storage:
 
-                #Retrieves the value associated with the given key.                
-                new_node = self.storage[key]
+                #Retrieves the value/node associated with the given key.                
+                node = self.storage[key]
 
-                #Also needs to move the key-value pair to the end of the order such that the pair is 
+                #Also needs to move the key-value pair to the end/front of the order such that the pair is 
                 # considered most-recently used.
-                self.list.move_to_front(new_node)                
+                self.list.move_to_front(node)                
 
                 #Returns the value associated with the key
-                return new_node.value[1]
+                #nodes are stored as a tuple with a key, value pair
+                #to access value use [1]
+                return node.value[1]
             else:
                 #returns none if the key/value pair doesn't exist
                 return None
@@ -73,27 +75,28 @@ class LRUCache:
     want to overwrite the old value associated with the key with
     the newly-specified value.
     """
-    def set(self, key, value):      
+    def set(self, key, value):    
         
-
         #check if key already exists in the dictioary
-        # if it does, overwrite the old value associated with the key with the new value
+        # if it does, overwrite the old value (node) associated with the key with the new value
         if key in self.storage:
-            value = self.storage[key]         
+
+            #get the value associated with the existing key
+            old_node = self.storage[key]         
         
-            #then retrieve the given key/value pair from the dictionary
-            new_item = self.storage.get(key)
+            #then assign the new key/value pair as a tuple to to the old node's value
+            #nodes are stored as a tuple with a key, value pair
+            old_node.value = (key, value)
 
             #and add it to the doubly linked list as the first item (MRU)
-            self.list.add_to_head(new_item)            
-
-            #increment the size of the cache
-            self.size += 1
+            self.list.move_to_front(old_node)  
+                     
 
         #if the cache is at max capacity, delete the oldest entry in the cache to make room        
-        if self.size == self.limit:      
+        elif self.size == self.limit:      
 
             #remove it from the cache or dictionary
+            #this syntax [self.list.tail.value[0]] accesses the key from the key/value pair tuple
             del self.storage[self.list.tail.value[0]]
 
             #remove it from the doubly linked list
@@ -101,18 +104,21 @@ class LRUCache:
 
             self.size -= 1
 
+            #add the key/value pair as a tuple to the node's value             
+            self.list.add_to_head((key, value))
+
+            #update the the dictionary with the new node (key,value tuple becomes the node)
+            self.storage[key] = self.list.head
+
         else:
-            #add value to dictionary with the provided key
-            self.storage[key] = value
+            #add the key/value pair as a tuple to the node's value  
+            self.list.add_to_head((key, value))
 
-            #then retrieve the given key/value pair from the dictionary
-            new_node = self.storage.get(key)
+            #update the the dictionary with the new node (key,value tuple becomes the node)
+            self.storage[key] = self.list.head
 
-            #and add it to the doubly linked list as the first item (MRU)
-            self.list.add_to_head(new_node)            
-
-            #increment the size of the cache
             self.size += 1
+
 
 
 
