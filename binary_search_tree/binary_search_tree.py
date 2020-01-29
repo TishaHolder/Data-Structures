@@ -15,25 +15,32 @@ class BinarySearchTree:
 
         root = BinarySearchTree(value)
 
-        #if root is None:
-            #root = value
-        #else:
-        if value > root.value:
-            if root.right is None:
-                root.right = value
-            else:
-                insert(root.right.value)
+        if self.value is None:
+            root = value
         else:
-            if root.left is None:
-                root.left = value
+            if value > root.value:
+                if root.right is None:
+                    root.right = value
+                else:
+                    insert(root.right.value)
             else:
-                insert(root.left.value)
+                if root.left is None:
+                    root.left = value
+                else:
+                    insert(root.left.value)
        
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
         pass
+    #if self.value == null
+    #check the root if it matches, if it does great
+    #check if the value is greater than root, if it is check the right side
+    #check if the value is less than root, if it is then check the left side
+    #
+    #
+    #
 
     # Return the maximum value found in the tree
     def get_max(self):
