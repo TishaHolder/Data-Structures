@@ -57,7 +57,7 @@ class LRUCache:
 
                 #Returns the value associated with the key
                 #nodes are stored as a tuple with a key, value pair
-                #to access value use [1]
+                #to access value use [1], key would be node.value[0]
                 return node.value[1]
             else:
                 #returns none if the key/value pair doesn't exist
