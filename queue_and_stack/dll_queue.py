@@ -5,6 +5,7 @@ from doubly_linked_list import ListNode, DoublyLinkedList
 """
 We can add items to the tail of our queue using the enqueue method, 
 but we remove them from the head using a method known as dequeue(),
+FIFO Structure
 """
 
 class Queue:
