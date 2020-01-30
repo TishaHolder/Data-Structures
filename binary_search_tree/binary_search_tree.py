@@ -129,16 +129,16 @@ class BinarySearchTree:
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):  
         if node is None:
-            return    
-
-        if node:
-            print(node.value)  
+            return 
 
         if node.left:
-            return self.in_order_print(node.left)        
+            self.in_order_print(node.left)   
+
+        if node:
+            print(node.value)       
 
         if node.right:
-            return self.in_order_print(node.right)
+            self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -150,23 +150,21 @@ class BinarySearchTree:
     def dft_print(self, node):
         
         if node is None:
-            return  
-        else:
-            self.stack.push(node.value)  
+            return    
 
-        if node.right is None:
-            return
-        else:
-            self.stack.push(node.right.value)
+        #print current node
+        if node:
+            print(node.value)  
 
-        if node.left is None:
-            return
-        else:
-            self.stack.push(node.left.value)
+        #if there is a left subtree
+        #recursively call dft_print
+        if node.left:
+            self.dft_print(node.left)        
 
-        
-        for item in self.stack:
-            print(item)
+        #if there is a right subtree
+        #recursively call dft_print
+        if node.right:
+            self.dft_print(node.right)
 
 
 
