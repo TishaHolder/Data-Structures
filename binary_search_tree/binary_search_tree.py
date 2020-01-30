@@ -11,49 +11,68 @@ class BinarySearchTree:
         self.right = None       
 
     # Insert the given value into the tree
-    def insert(self, value):        
-
-        root = BinarySearchTree(value)
-
+    def insert(self, value):     
+        
+        #if there is no root node
         if self.value is None:
-            root = value
+            #assign the value to the root node
+            self.value = value
         else:
-            if value > root.value:
-                if root.right is None:
-                    root.right = value
+            #if the root is greater than the value passed in
+            if self.value > value:
+                #the left subtree contains the values that are less than the node
+                #if there is no left subtree
+                if self.left is None:
+                    #create a new left subtree and initialize it with value
+                    self.left = BinarySearchTree(value)
                 else:
-                    insert(root.right.value)
+                    #if there is a left subtree insert the value in the left subtree
+                    self.left.insert(value)
             else:
-                if root.left is None:
-                    root.left = value
+                #if the root is less than the value passed in
+                #the right subtree contains the values that are greater than the node
+                #if there is no right subtree
+                if self.right is None:
+                    #create a new right subtree and initialize it with value
+                    self.right = BinarySearchTree(value)
                 else:
-                    insert(root.left.value)
+                    #if there is a right subtree insert the value in the right subtree
+                    self.right.insert(value)
        
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
         
+        #if there is no root, then there is no tree, return false
         if self.value is None:
             return False
+
+        #if the target is equal to the root, the value was found   
         if self.value == target:
             return True
+
+        #if the target is greater than the root then it is in the right subtree(s)
         if target > self.value:
-                if self.right is None:
-                    return False
-                else:
-                    contains(self.right.value)
+            #if there are no right subtrees, then the value is not in the tree
+            if self.right is None:
+                return False
+            else:
+                #if there is a right subtree, call contains on the right subtree(s)
+                return self.right.contains(target)
         else:
+            #if the target is less than the root then it is in the left subtree(s)
+            #if there are no left subtrees, then the value is not in the tree
             if self.left is None:
                 return False
             else:
-                contains(self.left.value)   
-    
-        
-       
+                #if there is a left subtree, call contains on the left subtree(s)
+                return self.left.contains(target)    
+         
 
     # Return the maximum value found in the tree
     def get_max(self):
+
         pass
 
     # Call the function `cb` on the value of each node
