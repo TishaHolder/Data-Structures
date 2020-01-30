@@ -6,9 +6,9 @@ from dll_stack import Stack
 
 class BinarySearchTree:
     def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None       
+        self.value = value #current node
+        self.left = None #left subtree
+        self.right = None #right subtree      
 
     # Insert the given value into the tree
     def insert(self, value):     
@@ -24,9 +24,10 @@ class BinarySearchTree:
                 #if there is no left subtree
                 if self.left is None:
                     #create a new left subtree and initialize it with value
+                    #each node is a new subtree
                     self.left = BinarySearchTree(value)
                 else:
-                    #if there is a left subtree insert the value in the left subtree
+                    #if there is a left subtree insert the value in the left subtree (recurse)
                     self.left.insert(value)
             else:
                 #if the root is less than the value passed in
@@ -36,7 +37,7 @@ class BinarySearchTree:
                     #create a new right subtree and initialize it with value
                     self.right = BinarySearchTree(value)
                 else:
-                    #if there is a right subtree insert the value in the right subtree
+                    #if there is a right subtree insert the value in the right subtree (recurse)
                     self.right.insert(value)
        
 
@@ -73,22 +74,52 @@ class BinarySearchTree:
     # Return the maximum value found in the tree
     def get_max(self):
 
-        #assign the root value as the max value
-        max = self.value
+        ###RECURSIVE SOLUTION###
+        #if there is nothing to the right of this node then this node must be the max node
+        """if not self.right:
+            return self.value
+        else
+            return self.right.get_max()
 
-        #while there is a right subtree
-        while self:    
-            #assign each value in the right subtree to max until we reach the leaf
-            #all values on the right is larger than the root        
-            max = self.value
-            self = self.right
-            
+        #using while loop
+        max = self.value"""
+
+        ###USING A WHILE LOOP###
+        #set the root as the max value
+        max = self.value
+        
+        #create a reference to the current node and update it as we traverse the tree
+        current = self
+
+        while current:
+            if current.value > max:
+                max = current.value
+           
+            current = current.right
+
         return max
+
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+
+        #if no root
+        if self.value is None:
+            return
+
+        #call cb on root
+        cb(self.value)
+
+        #if there is a right subtree
+        if self.right:
+            #call cb on each right subtree
+            self.right.for_each(cb)
+
+        #if there is a left subtree
+        if self.left:
+            #call cb on each left subtree
+            self.left.for_each(cb)
 
     # DAY 2 Project -----------------------
 
