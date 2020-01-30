@@ -20,7 +20,7 @@ class Queue:
 
         self.storage.add_to_tail(value)
 
-        #increment the size of the stack
+        #increment the size of the queue
         self.size += 1  
        
 
@@ -32,7 +32,7 @@ class Queue:
 
             value = self.storage.remove_from_head()
 
-            #decrement the size of the stack
+            #decrement the size of the queue
             self.size -= 1
 
             #return's the value of item_to_remove after the item is removed
