@@ -9,9 +9,7 @@ class BinarySearchTree:
         self.value = value #current node
         self.left = None #left subtree
         self.right = None #right subtree      
-        self.stack = Stack()
-        self.queue = Queue()
-
+       
     # Insert the given value into the tree
     def insert(self, value):     
         
@@ -62,6 +60,7 @@ class BinarySearchTree:
                 return False
             else:
                 #if there is a right subtree, call contains on the right subtree(s)
+                #use a return when recursing when you are trying to find something and return the result
                 return self.right.contains(target)
         else:
             #if the target is less than the root then it is in the left subtree(s)
@@ -142,23 +141,25 @@ class BinarySearchTree:
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
-    def bft_print(self, node):        
+    def bft_print(self, node): 
+
+        queue = Queue()       
 
         if node is None:
             return
         
-        self.queue.enqueue(node)
+        queue.enqueue(node)
 
-        while self.queue.len() > 0:
+        while queue.len() > 0:
 
-            top_node = self.queue.dequeue()
+            top_node = queue.dequeue()
             print(top_node.value)
 
-            if node.left:
-                self.queue.enqueue(node.left)                
+            if top_node.left:
+                queue.enqueue(top_node.left)                
             
-            if node.right:
-                self.queue.enqueue(node.right)           
+            if top_node.right:
+                queue.enqueue(top_node.right)           
 
 
 
